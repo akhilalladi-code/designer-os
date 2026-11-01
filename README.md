@@ -1,29 +1,40 @@
-# DesignerOS
+# DesignerOS ✳
 
-The open-source workspace for graphic designers. DesignerOS brings practical creative utilities, project organization, brand systems, and asset workflows into one focused workspace.
+**The creative workspace for graphic designers.** An open-source home for everyday design utilities and creative workflows.
 
-## Status
+## Implemented features
 
-Early development. The first release focuses on client-side tools that work without an account or external API credentials.
+- Responsive workspace dashboard, navigation and light/dark theme
+- **Color Studio:** HEX, RGB, HSL, palette variations, gradient CSS and WCAG contrast ratio
+- **Typography Studio:** modular type scale and live type specimen
+- **Image Toolkit:** local image preview and JPEG optimization/export
+- **Design Calculators:** pixel/DPI print dimensions, millimeter conversion and common print presets
+- **Social Presets:** searchable dimensions for Instagram, Facebook, LinkedIn, YouTube, Pinterest and X
+- **Projects:** create/delete with browser-local persistence
 
-## Planned modules
+## Run locally
 
-- Dashboard and workspace navigation
-- Color Studio: conversions, palettes, gradients, and contrast
-- Typography Studio: scale and spacing calculators
-- Image Toolkit: resize, convert, compress, and inspect images locally
-- Design Calculators and social media dimensions
-- Project, brand, and asset organization
-- Productivity tools and optional AI integrations
+Requires Node.js 20.9+.
 
-## Development
+```bash
+git clone https://github.com/akhilalladi-code/designer-os.git
+cd designer-os
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-The application is built with Next.js, React, TypeScript, and Tailwind CSS. See the setup instructions once the application foundation is added.
+Open http://localhost:3000.
 
-## Privacy
+## Quality checks
 
-Local creative utilities are designed to process files in the browser. Cloud storage and AI integrations will remain opt-in and require explicit configuration.
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run build
+```
 
-## License
+No environment variables are needed for implemented local-first tools. Future AI/Supabase integrations are optional and require server-side secrets. Image processing runs in the browser; project data currently stays in localStorage on the current browser and does not sync across devices.
 
-MIT. See [LICENSE](LICENSE).
+See [feature status](docs/FEATURES.md), [contributing](.github/CONTRIBUTING.md), and [security policy](SECURITY.md). MIT licensed.

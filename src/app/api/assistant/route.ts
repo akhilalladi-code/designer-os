@@ -2,8 +2,31 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 const MAX_PROMPT = 5000;
+const RATE_WINDOW_MS = 60_000;
+const MAX_REQUESTS_PER_WINDOW = 5;
+// Best-effort per-process throttling. Production deployments should also use
+// platform-level rate limiting and authentication for public AI access.
+const rateLimits = new Map<string, { count: number; resetAt: number }>();
 
 export async function POST(request: Request) {
+  const origin = request.headers.get("origin");
+  if (!origin || origin !== new URL(request.url).origin) {
+    return NextResponse.json({ error: "Requests must originate from this application." }, { status: 403 });
+  }
+
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const clientIp = forwardedFor?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+  const now = Date.now();
+  const current = rateLimits.get(clientIp);
+  if (current && current.resetAt > now && current.count >= MAX_REQUESTS_PER_WINDOW) {
+    return NextResponse.json({ error: "Too many AI requests. Wait a minute and try again." }, { status: 429 });
+  }
+  if (!current || current.resetAt <= now) rateLimits.set(clientIp, { count: 1, resetAt: now + RATE_WINDOW_MS });
+  else rateLimits.set(clientIp, { count: current.count + 1, resetAt: current.resetAt });
+  if (rateLimits.size > 1000) {
+    for (const [ip, entry] of rateLimits) if (entry.resetAt <= now) rateLimits.delete(ip);
+  }
+
   const key = process.env.OPENAI_API_KEY;
   if (!key) return NextResponse.json({ error: "AI assistant is not configured yet. Add OPENAI_API_KEY to your server environment to enable it." }, { status: 503 });
   let body: unknown;

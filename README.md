@@ -23,7 +23,7 @@
 
 The app is local-first. Projects, clients, tasks, brand settings, assets and time sessions are stored in the current browser's localStorage. Uploaded assets are encoded locally; no upload service is involved. Browser storage is device- and browser-specific, can be cleared by the user or browser, and is not a substitute for backups. Use **Export workspace data** in the sidebar, and separately export brand guidelines/JSON and download important assets. The workspace export does not embed uploaded asset binaries.
 
-Image preview and JPEG conversion run in the browser. The AI assistant is disabled until configured; when enabled, the prompt and selected brand context are sent to the configured OpenAI API.
+Image preview and JPEG conversion run in the browser. The AI assistant is disabled until configured; when enabled, the prompt and selected brand context are sent to the configured OpenAI API. Its same-origin check and in-process request throttle are best-effort safeguards, not user authentication; add host-level rate limiting and authentication before enabling it for an unrestricted public audience.
 
 ## Run locally
 

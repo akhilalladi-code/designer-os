@@ -21,7 +21,7 @@
 
 The workspace uses localStorage in the current browser. It does not provide authentication, cross-device synchronization, a cloud database, shared team workspaces or server-side asset storage. Large uploads can reach browser storage limits; individual asset uploads are limited to 1 MB and users should keep independent backups. No file is uploaded to a server by the asset library.
 
-The AI assistant requires `OPENAI_API_KEY` on the server. Without it, the endpoint returns a setup message and does not send prompt data to an AI provider.
+The AI assistant requires `OPENAI_API_KEY` on the server. Without it, the endpoint returns a setup message and does not send prompt data to an AI provider. The route checks the request origin and applies a per-process request throttle; these are not a replacement for authentication or edge-level rate limiting on a public deployment.
 
 ## Not implemented
 

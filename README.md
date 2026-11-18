@@ -39,6 +39,10 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Deployment
+
+DesignerOS uses a Next.js server route for the optional AI assistant, so it cannot be hosted as a static GitHub Pages export. The repository includes a Vercel configuration for a Node-compatible Next.js deployment. See [deployment instructions](DEPLOYMENT.md). A hosting account and project connection are still required; no live deployment is claimed.
+
 ## Optional AI configuration
 
 Set `OPENAI_API_KEY` in the server environment (never use a `NEXT_PUBLIC_` prefix). Optionally set `OPENAI_MODEL` (default: `gpt-4.1-mini`). The key is read only by the server route at `/api/assistant`. No AI request is made unless a user submits the assistant form.

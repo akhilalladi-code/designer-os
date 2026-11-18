@@ -1,22 +1,31 @@
 # Feature status
 
-## Working in the initial foundation
-- Dashboard/navigation and responsive shell.
-- Theme toggle.
-- Color Studio: HEX input, RGB and HSL readouts, generated color variations, gradient CSS copy, and WCAG contrast ratio.
-- Typography scale generator with selectable modular ratios and live specimen sizing.
-- Image optimizer: local image preview and JPEG export with quality control.
-- Design calculators: pixel/DPI print dimensions, millimeter conversion, and common print presets.
-- Social presets: searchable platform filters and common canvas dimensions.
-- Projects: create and delete project records stored in browser localStorage.
+## Implemented in the workspace
 
-## Planned / incomplete
-- Authentication, cross-device sync, cloud database and storage.
-- Asset library with tagging, favorites and uploads.
-- Full brand kit editor and downloadable guidelines.
-- Time tracking, client management, task and revision workflows.
-- AI assistant and server-side provider integration.
-- More image operations (crop, batch, metadata, PNG/WebP export and background removal).
-- Expanded social dimensions with source verification and favorites.
+- Responsive dashboard, sidebar navigation and light/dark theme.
+- Project register: create, search, client assignment, due date, status changes and delete.
+- Client directory: create and remove client records.
+- Task list: create tasks with project, due date and priority; complete/reopen and delete tasks.
+- Brand workspace: editable profile, tagline, website, notes, up to twelve validated color tokens, heading/body font names, JSON export and standalone HTML guidelines export.
+- Asset library: local image/font upload, per-file size validation, filename/tag search, tags, favorites, download and delete.
+- Time tracker: start, pause, persist across refresh, save sessions and view session history.
+- Creative AI assistant: optional server-side OpenAI Responses API integration with prompt validation, timeout and provider error handling.
+- Color studio: HEX/RGB readout, color variations, CSS gradient and WCAG contrast calculation.
+- Typography scale and live type specimen.
+- Browser-local image preview and JPEG export.
+- Pixel/DPI print calculator and common presets.
+- Searchable social-media dimensions.
+- Browser-local workspace backup export (project/client/task/brand/time metadata; asset files are downloaded separately).
 
-These planned features are not presented as completed functionality. External AI and cloud features require explicit credentials and are not enabled by default.
+## Storage boundaries
+
+The workspace uses localStorage in the current browser. It does not provide authentication, cross-device synchronization, a cloud database, shared team workspaces or server-side asset storage. Large uploads can reach browser storage limits; individual asset uploads are limited to 1 MB and users should keep independent backups. No file is uploaded to a server by the asset library.
+
+The AI assistant requires `OPENAI_API_KEY` on the server. Without it, the endpoint returns a setup message and does not send prompt data to an AI provider. The route checks the request origin and applies a per-process request throttle; these are not a replacement for authentication or edge-level rate limiting on a public deployment.
+
+## Not implemented
+
+- Authentication, cloud sync, multi-user collaboration and cloud asset storage.
+- Full raster image editing, batch conversion and background removal.
+- Client portal, invoicing, payment processing and external calendar integrations.
+- Automatic font loading or license management.
